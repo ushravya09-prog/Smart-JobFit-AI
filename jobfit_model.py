@@ -1,12 +1,20 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from PyPDF2 import PdfReader
+
+
+def extract_text_from_pdf(pdf_path):
+    reader = PdfReader(pdf_path)
+
+    text = ""
+
+    for page in reader.pages:
+        text += page.extract_text() or ""
+
+    return text
 
 
 def calculate_job_match(resume_text, job_description):
-    """
-    Calculate the similarity between a resume and a job description.
-    """
-
     documents = [resume_text, job_description]
 
     vectorizer = TfidfVectorizer(stop_words="english")
@@ -17,23 +25,23 @@ def calculate_job_match(resume_text, job_description):
         tfidf_matrix[1:2]
     )[0][0]
 
-    match_percentage = round(similarity_score * 100, 2)
-
-    return match_percentage
+    return round(similarity_score * 100, 2)
 
 
 if __name__ == "__main__":
 
-    resume = """
-    Python developer with experience in machine learning,
-    pandas, numpy, scikit-learn, and data analysis.
-    """
+    print("===== Smart JobFit AI =====")
 
-    job_description = """
-    Looking for a Machine Learning Engineer with skills in Python,
-    machine learning, pandas, numpy, and scikit-learn.
-    """
+    pdf_path = input("\nEnter your resume PDF filename: ")
 
-    score = calculate_job_match(resume, job_description)
+    resume_text = extract_text_from_pdf(pdf_path)
 
+    job_description = input(
+        "\nEnter the job description and required skills:\n"
+    )
+
+    score = calculate_job_match(resume_text, job_description)
+
+    print("\n==============================")
     print(f"Job Match Score: {score}%")
+    print("==============================")
