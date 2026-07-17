@@ -28,6 +28,44 @@ def calculate_job_match(resume_text, job_description):
     return round(similarity_score * 100, 2)
 
 
+def extract_skills(text):
+
+    skills_list = [
+        "python",
+        "sql",
+        "machine learning",
+        "deep learning",
+        "artificial intelligence",
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "tensorflow",
+        "keras",
+        "power bi",
+        "tableau",
+        "excel",
+        "data analysis",
+        "data visualization",
+        "flask",
+        "git",
+        "github",
+        "nlp",
+        "computer vision",
+        "java",
+        "c++"
+    ]
+
+    text = text.lower()
+
+    found_skills = []
+
+    for skill in skills_list:
+        if skill in text:
+            found_skills.append(skill)
+
+    return found_skills
+
+
 if __name__ == "__main__":
 
     print("===== Smart JobFit AI =====")

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart JobFit AI</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 650px;
+            margin: 50px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.12);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 20px;
+        }
+
+        input[type="file"],
+        textarea {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        .result {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin-top: 15px;
+            height: 20px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: #27ae60;
+            border-radius: 10px;
+        }
+
+        .skills-section {
+            margin-top: 30px;
+        }
+
+        .skills-section h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .skill {
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .matching {
+            background: #d5f5e3;
+            color: #1e8449;
+        }
+
+        .missing {
+            background: #fadbd8;
+            color: #c0392b;
+        }
+
+        .no-skills {
+            color: #777;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Smart JobFit AI</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <label>Upload Your Resume PDF</label>
+
+            <input
+                type="file"
+                name="resume"
+                accept=".pdf"
+                required
+            >
+
+            <label>Enter Job Description</label>
+
+            <textarea
+                name="job_description"
+                placeholder="Paste the job description here..."
+                required
+            ></textarea>
+
+            <button type="submit">
+                Analyze Job Match
+            </button>
+
+        </form>
+
+
+        {% if score is not none %}
+
+        <div class="result">
+
+            Job Match Score: {{ score }}%
+
+        </div>
+
+        <div class="progress-container">
+
+            <div
+                class="progress-bar"
+                style="width: {{ score }}%;"
+            ></div>
+
+        </div>
+
+
+        <div class="skills-section">
+
+            <h2>Matching Skills</h2>
+
+            <div class="skills-list">
+
+                {% if matching_skills %}
+
+                    {% for skill in matching_skills %}
+
+                        <span class="skill matching">
+                            {{ skill }}
+                        </span>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p class="no-skills">
+                        No matching skills found.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <h2>Missing Skills</h2>
+
+            <div class="skills-list">
+
+                {% if missing_skills %}
+
+                    {% for skill in missing_skills %}
+
+                        <span class="skill missing">
+                            {{ skill }}
+                        </span>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p class="no-skills">
+                        No missing skills found.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
