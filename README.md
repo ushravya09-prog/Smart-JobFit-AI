@@ -1,101 +1,89 @@
-# 🤖 Smart JobFit AI
+# 🚀 Smart JobFit AI
 
-Smart JobFit AI is a Machine Learning-powered web application that helps job seekers evaluate how well their resume matches a job description.
+Smart JobFit AI is a Machine Learning-based web application that compares a user's resume with a job description and calculates a Job Match Score using Natural Language Processing (NLP).
 
-The system analyzes resume content, compares it with job requirements, calculates a match score, and identifies matching and missing skills.
+The application extracts text from a PDF resume, compares it with the job description using TF-IDF Vectorization and Cosine Similarity, and displays:
+- 📊 Job Match Score
+- ✅ Matching Skills
+- ❌ Missing Skills
 
-## 🚀 Features
+---
 
-- Resume PDF Upload
-- Job Description Analysis
-- TF-IDF Vectorization
-- Cosine Similarity Matching
-- Job Match Score Calculation
+## Features
+
+- Upload Resume (PDF)
+- Paste Job Description
+- Automatic Resume Text Extraction
+- Job Match Percentage
 - Matching Skills Detection
-- Missing Skills Identification
-- Interactive Progress Bar
-- Modern Flask Web Interface
+- Missing Skills Detection
+- Clean Flask Web Interface
 
-## 🛠️ Technologies Used
+---
+
+## Technologies Used
 
 - Python
 - Flask
 - Scikit-learn
+- TF-IDF Vectorizer
+- Cosine Similarity
 - PyPDF2
 - HTML
 - CSS
-- Git & GitHub
 
-## 📂 Project Structure
+---
 
-```text
+## Project Structure
+
+```
 Smart-JobFit-AI/
 │
 ├── app.py
 ├── jobfit_model.py
 ├── resume_parser.py
 ├── requirements.txt
+├── README.md
+│
 ├── templates/
 │   └── index.html
-└── README.md
+│
+├── images/
+│   └── home.png
 ```
 
-## ⚙️ Installation
+---
 
-### Clone Repository
+## How It Works
 
-```bash
-git clone https://github.com/your-username/Smart-JobFit-AI.git
-```
+1. Upload your resume in PDF format.
+2. Enter a job description.
+3. The application extracts text from the resume.
+4. TF-IDF converts the resume and job description into numerical vectors.
+5. Cosine Similarity calculates how closely they match.
+6. Matching and missing skills are displayed along with the Job Match Score.
 
-### Install Dependencies
+---
 
-```bash
-pip install -r requirements.txt
-```
+## Screenshot
 
-### Run Application
+![Smart JobFit AI](images/home.png)
 
-```bash
-python app.py
-```
+---
 
-Open:
+## Future Improvements
 
-```text
-http://127.0.0.1:5000
-```
+- Resume recommendations
+- ATS Resume Score
+- Keyword Suggestions
+- Resume Improvement Tips
+- Multiple Resume Comparison
+- Download Report as PDF
 
-## 📊 How It Works
+---
 
-1. Upload Resume PDF
-2. Enter Job Description
-3. Extract Resume Text
-4. Apply TF-IDF Vectorization
-5. Calculate Cosine Similarity
-6. Generate Match Score
-7. Display Matching & Missing Skills
-
-## 🎯 Example Output
-
-- Match Score: 35.33%
-- Matching Skills: Python, SQL, Pandas, TensorFlow
-- Missing Skills: Keras, Deep Learning, Scikit-learn
-
-## 🔮 Future Improvements
-
-- Resume Improvement Suggestions
-- AI-based Recommendations
-- Skill Gap Analysis
-- Resume Ranking
-- Job Recommendations
-- Cloud Deployment
-
-## 👩‍💻 Author
+## Author
 
 **Shravya U**
 
 Artificial Intelligence & Machine Learning Student
-
----
-⭐ If you like this project, give it a star on GitHub!
