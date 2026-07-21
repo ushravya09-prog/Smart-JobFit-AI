@@ -7,9 +7,17 @@ The application extracts text from a PDF resume, compares it with the job descri
 - ✅ Matching Skills
 - ❌ Missing Skills
 
-## 📸 Project Preview
+## 📸 Project Screenshots
 
-![Smart JobFit AI](images/home.png)
+### Home Page
+
+![Home Page](images/home.png)
+
+---
+
+### Job Match Result
+
+![Result](images/result.png)
 
 ## Features
 
