@@ -4,241 +4,601 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smart JobFit AI - Advanced ATS Resume Matcher & Semantic Analyzer powered by NLP and SBERT.">
+    <title>Smart JobFit AI | AI-Powered Resume Matcher</title>
 
-    <title>Smart JobFit AI</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        .container {
-            width: 650px;
-            margin: 50px auto;
-            background: white;
-            padding: 35px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.12);
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
         }
 
-        h1 {
+        .navbar {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo i {
+            -webkit-text-fill-color: initial;
+            color: var(--accent-purple);
+        }
+
+        .badge-tag {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            color: #c084fc;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-section {
             text-align: center;
-            color: #2c3e50;
+            margin-bottom: 35px;
+        }
+
+        .header-section h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .header-section p {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
             margin-bottom: 30px;
         }
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 20px;
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        input[type="file"],
-        textarea {
-            width: 100%;
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dropzone {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+        }
+
+        .dropzone:hover {
+            border-color: var(--accent-purple);
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .dropzone i {
+            font-size: 36px;
+            color: var(--accent-purple);
+            margin-bottom: 12px;
+        }
+
+        .dropzone p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .file-name-preview {
             margin-top: 10px;
-            padding: 12px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #38bdf8;
+        }
+
+        input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            top: 0;
+            left: 0;
         }
 
         textarea {
-            height: 150px;
+            width: 100%;
+            height: 180px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 16px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 14px;
             resize: none;
+            transition: border-color 0.3s ease;
         }
 
-        button {
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .btn-submit {
             width: 100%;
-            margin-top: 25px;
-            padding: 14px;
-            background: #3498db;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
             color: white;
             border: none;
-            border-radius: 7px;
-            font-size: 17px;
+            border-radius: 14px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        button:hover {
-            background: #2980b9;
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.5);
         }
 
-        .result {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-            color: #27ae60;
+        .alert-error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .progress-container {
+        /* Results Section */
+        .results-card {
+            margin-top: 40px;
+            border-top: 1px solid var(--card-border);
+            padding-top: 35px;
+        }
+
+        .score-dashboard {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 30px;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 35px;
+        }
+
+        @media (max-width: 768px) {
+            .score-dashboard {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .score-circle {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--score-color, var(--success)) calc(var(--score-val, 0) * 1%),
+                rgba(255, 255, 255, 0.08) 0
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .score-circle-inner {
+            width: 135px;
+            height: 135px;
+            border-radius: 50%;
+            background: #0f172a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-number {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .metrics-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .metric-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .progress-bar-bg {
             width: 100%;
-            background: #e0e0e0;
-            border-radius: 10px;
-            margin-top: 15px;
-            height: 20px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        .progress-bar {
-            height: 20px;
-            background: #27ae60;
-            border-radius: 10px;
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-out;
         }
 
-        .skills-section {
-            margin-top: 30px;
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
         }
 
-        .skills-section h2 {
-            color: #2c3e50;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 8px;
+        @media (max-width: 768px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .skills-list {
+        .section-box {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 8px;
         }
 
-        .skill {
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-weight: bold;
+        .tag {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tag-match {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+        }
+
+        .tag-missing {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .no-data {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .recommendations-box {
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .recommendation-item {
             font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #e2e8f0;
         }
 
-        .matching {
-            background: #d5f5e3;
-            color: #1e8449;
+        .recommendation-item:last-child {
+            margin-bottom: 0;
         }
 
-        .missing {
-            background: #fadbd8;
-            color: #c0392b;
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
         }
 
-        .no-skills {
-            color: #777;
+        footer a {
+            color: #c084fc;
+            text-decoration: none;
         }
-
     </style>
-
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            Smart JobFit AI
+        </div>
+        <span class="badge-tag"><i class="fa-solid fa-brain"></i> SBERT + TF-IDF Engine</span>
+    </div>
 
-        <h1>Smart JobFit AI</h1>
+    <div class="main-container">
 
-        <form method="POST" enctype="multipart/form-data">
+        <div class="header-section">
+            <h1>AI Resume Matcher & ATS Optimizer</h1>
+            <p>Compare your PDF resume against job descriptions using hybrid semantic embeddings and dynamic skill extraction.</p>
+        </div>
 
-            <label>Upload Your Resume PDF</label>
+        {% if error_message %}
+        <div class="alert-error">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ error_message }}
+        </div>
+        {% endif %}
 
-            <input
-                type="file"
-                name="resume"
-                accept=".pdf"
-                required
-            >
+        <form method="POST" enctype="multipart/form-data" id="analysis-form">
 
-            <label>Enter Job Description</label>
+            <div class="form-grid">
 
-            <textarea
-                name="job_description"
-                placeholder="Paste the job description here..."
-                required
-            ></textarea>
+                <div class="input-group">
+                    <label class="input-label" for="resume">
+                        <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Upload Resume (PDF)
+                    </label>
+                    <div class="dropzone" id="dropzone-area">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <p><strong>Click to browse</strong> or drag & drop PDF here</p>
+                        <div class="file-name-preview" id="file-name-display">No file selected</div>
+                        <input type="file" name="resume" id="resume" accept=".pdf" required onchange="handleFileSelected(this)">
+                    </div>
+                </div>
 
-            <button type="submit">
-                Analyze Job Match
+                <div class="input-group">
+                    <label class="input-label" for="job_description">
+                        <i class="fa-solid fa-briefcase" style="color: var(--accent-blue);"></i> Job Description
+                    </label>
+                    <textarea name="job_description" id="job_description" placeholder="Paste the job description and required qualifications here..." required></textarea>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn-submit" id="btn-submit">
+                <i class="fa-solid fa-chart-line"></i> Analyze Job Alignment
             </button>
 
         </form>
 
+        {% if scores %}
+        <div class="results-card" id="results">
 
-        {% if score is not none %}
+            <div class="score-dashboard">
 
-        <div class="result">
-
-            Job Match Score: {{ score }}%
-
-        </div>
-
-        <div class="progress-container">
-
-            <div
-                class="progress-bar"
-                style="width: {{ score }}%;"
-            ></div>
-
-        </div>
-
-
-        <div class="skills-section">
-
-            <h2>Matching Skills</h2>
-
-            <div class="skills-list">
-
-                {% if matching_skills %}
-
-                    {% for skill in matching_skills %}
-
-                        <span class="skill matching">
-                            {{ skill }}
-                        </span>
-
-                    {% endfor %}
-
+                {% set overall = scores.overall_score %}
+                {% if overall >= 75 %}
+                    {% set score_color = '#10b981' %}
+                {% elif overall >= 50 %}
+                    {% set score_color = '#f59e0b' %}
                 {% else %}
-
-                    <p class="no-skills">
-                        No matching skills found.
-                    </p>
-
+                    {% set score_color = '#ef4444' %}
                 {% endif %}
+
+                <div class="score-circle" style="--score-val: {{ overall }}; --score-color: {{ score_color }};">
+                    <div class="score-circle-inner">
+                        <span class="score-number" style="color: {{ score_color }};">{{ overall }}%</span>
+                        <span class="score-label">ATS MATCH SCORE</span>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <span><i class="fa-solid fa-brain" style="color: #c084fc;"></i> Semantic Understanding (SBERT)</span>
+                            <span style="color: #c084fc;">{{ scores.semantic_score }}%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: {{ scores.semantic_score }}%; background: #c084fc;"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-header">
+                            <span><i class="fa-solid fa-tags" style="color: #38bdf8;"></i> Keyword Alignment (TF-IDF)</span>
+                            <span style="color: #38bdf8;">{{ scores.keyword_score }}%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: {{ scores.keyword_score }}%; background: #38bdf8;"></div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
+            <div class="skills-grid">
 
-            <h2>Missing Skills</h2>
+                <div class="section-box">
+                    <div class="section-title" style="color: #34d399;">
+                        <i class="fa-solid fa-circle-check"></i> Matching Skills ({{ matching_skills|length }})
+                    </div>
+                    <div class="skill-tags">
+                        {% if matching_skills %}
+                            {% for skill in matching_skills %}
+                                <span class="tag tag-match"><i class="fa-solid fa-check"></i> {{ skill }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="no-data">No matching skills detected.</span>
+                        {% endif %}
+                    </div>
+                </div>
 
-            <div class="skills-list">
-
-                {% if missing_skills %}
-
-                    {% for skill in missing_skills %}
-
-                        <span class="skill missing">
-                            {{ skill }}
-                        </span>
-
-                    {% endfor %}
-
-                {% else %}
-
-                    <p class="no-skills">
-                        No missing skills found.
-                    </p>
-
-                {% endif %}
+                <div class="section-box">
+                    <div class="section-title" style="color: #fca5a5;">
+                        <i class="fa-solid fa-circle-xmark"></i> Missing Skills ({{ missing_skills|length }})
+                    </div>
+                    <div class="skill-tags">
+                        {% if missing_skills %}
+                            {% for skill in missing_skills %}
+                                <span class="tag tag-missing"><i class="fa-solid fa-plus"></i> {{ skill }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="no-data">No missing skills detected!</span>
+                        {% endif %}
+                    </div>
+                </div>
 
             </div>
 
-        </div>
+            {% if recommendations %}
+            <div class="recommendations-box">
+                <div class="section-title" style="color: #c084fc; margin-bottom: 14px;">
+                    <i class="fa-solid fa-lightbulb"></i> Actionable AI Optimization Tips
+                </div>
+                {% for rec in recommendations %}
+                    <div class="recommendation-item">{{ rec|safe }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
 
+        </div>
         {% endif %}
 
     </div>
 
+    <footer>
+        Smart JobFit AI &copy; Built with Python, Flask, PyPDF2 & Scikit-learn
+    </footer>
+
+    <script>
+        function handleFileSelected(input) {
+            const display = document.getElementById('file-name-display');
+            if (input.files && input.files[0]) {
+                display.innerText = '📄 ' + input.files[0].name;
+            } else {
+                display.innerText = 'No file selected';
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -1,5 +1,8 @@
+flask
 pandas
 numpy
 scikit-learn
-flask
 PyPDF2
+sentence-transformers
+nltk
+pytest
